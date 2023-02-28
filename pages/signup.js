@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 import { useRef, useState } from "react";
 
@@ -10,6 +11,8 @@ import ErrorMessage from "@/components/UI/Auth/ErrorMessage";
 import InputAuth from "@/components/UI/Auth/InputAuth";
 
 export default function SignUp() {
+  const router = useRouter();
+
   const emailRef = useRef();
   const nameRef = useRef();
   const passwordRef = useRef();
@@ -48,9 +51,22 @@ export default function SignUp() {
       return;
     }
 
-    console.log(email, name, password);
+    const response = await fetch("/api/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, name, password }),
+    });
+    const data = await response.json();
 
-    setIsValidating(false);
+    if (response.status === 201) {
+      alert(data.message);
+      router.replace("/login");
+    } else {
+      setErrorMessage(data.message);
+      setIsValidating(false);
+    }
   };
 
   return (

@@ -1,5 +1,8 @@
 import Head from "next/head";
 
+import ButtonPage from "@/components/UI/ButtonPage";
+import Card from "@/components/UI/Card";
+
 export default function Home() {
   return (
     <>
@@ -13,7 +16,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <p>Hello, world.</p>
+      <Card>
+        <p className="text-center">Hai, orang asing.</p>
+        <ButtonPage url="/login">Masuk</ButtonPage>
+      </Card>
     </>
   );
 }

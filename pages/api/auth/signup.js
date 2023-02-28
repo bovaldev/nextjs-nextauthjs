@@ -1,6 +1,6 @@
 import crypto from "crypto";
+import nodemailer from "nodemailer";
 import { hash } from "bcryptjs";
-import { createTransport } from "nodemailer";
 
 import { isUserExists } from "@/helpers/fetchFirebase";
 
@@ -36,15 +36,15 @@ async function createUser(email, name, password, verifyEmailToken) {
   return data;
 }
 
-function sendEmailVerification(email, name, verifyEmailToken) {
-  const transporter = createTransport({
+async function sendEmailVerification(email, name, verifyEmailToken) {
+  const transporter = nodemailer.createTransport({
+    host: "smtp.zoho.com",
+    port: 465,
+    secure: true,
     auth: {
       user: process.env.ZOHO_USER,
       pass: process.env.ZOHO_PASS,
     },
-    host: "smtp.zoho.com",
-    port: 465,
-    secure: true,
   });
 
   const mailMessage = `
@@ -56,7 +56,7 @@ function sendEmailVerification(email, name, verifyEmailToken) {
       </a>
     </p>`;
 
-  transporter.sendMail({
+  await transporter.sendMail({
     from: process.env.ZOHO_USER,
     to: email,
     subject: "Verifikasi akun Next.js x NextAuth.js",
@@ -95,7 +95,7 @@ export default async function handler(req, res) {
     verifyEmailToken
   );
 
-  sendEmailVerification(email, name, verifyEmailToken);
+  await sendEmailVerification(email, name, verifyEmailToken);
 
   res.status(201).json({
     message: "Pendaftaran berhasil. Cek email untuk verifikasi akun.",

@@ -2,6 +2,10 @@
 
 ## Changelog
 
+### 0.1.3 - Try to fix Nodemailer
+
+- Coba memperbaiki Nodemailer yang hanya berhasil mengirim email verifikasi akun pada kondisi tertentu (yaitu hanya saat _development_ atau saat di mode _incognito_ peramban)
+
 ### 0.1.2 - Add Sign Up functionality
 
 - Memvalidasi data yang dikirim oleh form di laman `/signup`

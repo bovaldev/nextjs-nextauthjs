@@ -2,6 +2,14 @@
 
 ## Changelog
 
+### 0.1.4 - Add Login functionality
+
+- Menginstal `next-auth` dan menulis konfigurasi sesuai [dokumentasinya](https://next-auth.js.org/getting-started/example)
+- Di `[...nextauth].js`, memvalidasi data yang dikirim oleh form di laman `/login`
+- Mengalihkan laman ke `/` setelah data berhasil diproses
+- Mengambil _session_ untuk menampilkan nama akun dan tombol _Logout_
+- Mengalihkan laman `/login` dan `/signup` ke laman `/` ketika memiliki _session_
+
 ### 0.1.3 - Try to fix Nodemailer
 
 - Coba memperbaiki Nodemailer yang hanya berhasil mengirim email verifikasi akun pada kondisi tertentu (yaitu hanya saat _development_ atau saat di mode _incognito_ peramban)

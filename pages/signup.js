@@ -1,7 +1,10 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { getServerSession } from "next-auth/next";
 
 import { useRef, useState } from "react";
+
+import { authOptions } from "./api/auth/[...nextauth]";
 
 import ButtonPage from "@/components/UI/ButtonPage";
 import Card from "@/components/UI/Card";
@@ -120,4 +123,21 @@ export default function SignUp() {
       </Card>
     </>
   );
+}
+
+export async function getServerSideProps(context) {
+  const session = await getServerSession(context.req, context.res, authOptions);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 }
